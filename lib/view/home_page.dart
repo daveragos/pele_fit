@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pele_fit/model/exercise.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,34 +13,48 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Exercise> exercises = [];
+  @override
+  void initState() {
+    super.initState();
+    initializeExercise();
+  }
+
+  Future<void> initializeExercise() async {
+    String jsonString =
+        await rootBundle.loadString('assets/dist/exercises.json');
+    List<dynamic> exerciseMap = json.decode(jsonString);
+    exercises = exerciseMap.map((item) => Exercise.fromJson(item)).toList();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text('Hi Pele'),
+        // backgroundColor: Colors.black.withOpacity(0.8),
+        title: const Text('......Pele Ahaaaa'),
       ),
-      body: ListView(children: [
-        ListTile(
-          leading: Image.asset('assets/exercises/Adductor/1.jpg'),
-          title: const Text('data'),
-          trailing: Image.asset('assets/exercises/Adductor/0.jpg'),
-        ),
-        ListTile(
-          leading: Image.asset('assets/exercises/Adductor/1.jpg'),
-          title: const Text('data'),
-          trailing: Image.asset('assets/exercises/Ab_Roller/0.jpg'),
-        ),
-        ListTile(
-          leading: Image.asset('assets/exercises/Air_Bike/1.jpg'),
-          title: const Text('data'),
-          trailing: Image.asset('assets/exercises/Adductor/0.jpg'),
-        ),
-        ListTile(
-          leading: Image.asset('assets/exercises/3_4_Sit-Up/1.jpg'),
-          title: const Text('data'),
-          trailing: Image.asset('assets/exercises/Adductor/0.jpg'),
-        )
-      ]),
+      body: ListView.builder(
+        itemCount: exercises.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title: Text(exercises[index].name!),
+            subtitle: Text(exercises[index].level!),
+            leading: Image.asset(
+              'assets/exercises/${exercises[index].images[0]}',
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/detail',
+                  arguments: exercises[index].id);
+            },
+          );
+        },
+      ),
     );
   }
 }

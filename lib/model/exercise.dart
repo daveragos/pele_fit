@@ -1,15 +1,15 @@
 class Exercise {
-  final String id;
-  final String name;
-  final String force;
-  final String level;
-  final String mechanic;
-  final String equipment;
-  final List<String> primaryMuscles;
-  final List<String> secondaryMuscles;
-  final List<String> instructions;
-  final String category;
-  final List<String> images;
+  final String? id;
+  final String? name;
+  final String? force;
+  final String? level;
+  final String? mechanic;
+  final String? equipment;
+  final List<String?> primaryMuscles;
+  final List<String?> secondaryMuscles;
+  final List<String?> instructions;
+  final String? category;
+  final List<String?> images;
 
   Exercise({
     required this.id,

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pele_fit/model/exercise.dart';
 
 class HomePage extends StatefulWidget {
@@ -40,10 +39,11 @@ class _HomePageState extends State<HomePage> {
         itemCount: exercises.length,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            title: Text(exercises[index].name!),
-            subtitle: Text(exercises[index].level!),
+            title: Text(exercises[index].name),
+            subtitle: Text(exercises[index].level),
             leading: Image.asset(
               'assets/exercises/${exercises[index].images[0]}',
+              // 'assets/exercises/3_4_Sit-Up/0.jpg',
               width: 100,
               height: 100,
               fit: BoxFit.cover,
